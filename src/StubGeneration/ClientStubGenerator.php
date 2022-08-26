@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace GoetasWebservices\SoapServices\SoapClient\StubGeneration;
 
-use Doctrine\Common\Inflector\Inflector;
+use GoetasWebservices\SoapServices\Metadata\Generator\MetadataGenerator;
 use GoetasWebservices\SoapServices\Metadata\Headers\Header;
 use GoetasWebservices\SoapServices\SoapClient\StubGeneration\Tag\MethodTag;
 use GoetasWebservices\SoapServices\SoapClient\StubGeneration\Tag\ParamTag;
@@ -73,7 +73,7 @@ class ClientStubGenerator
 
         $namespaces = $this->phpConverter->getNamespaces();
         $class->setNamespaceName($namespaces[$portType->getDefinition()->getTargetNamespace()] . '\\SoapStubs');
-        $class->setName(Inflector::classify($portType->getName()));
+        $class->setName(MetadataGenerator::inflector()->classify($portType->getName()));
         $class->setDocblock($docBlock);
 
         foreach ($portType->getOperations() as $operation) {
@@ -88,7 +88,7 @@ class ClientStubGenerator
     {
         $types = $this->getOperationReturnTypes($operation);
         $operationTag = new MethodTag(
-            Inflector::camelize($operation->getName()),
+            MetadataGenerator::inflector()->camelize($operation->getName()),
             $types,
             preg_replace("/[\n\r]+/", ' ', $operation->getDocumentation())
         );
