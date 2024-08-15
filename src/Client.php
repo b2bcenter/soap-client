@@ -277,4 +277,16 @@ class Client
 
         return $requestMessage;
     }
+
+    public function setClient(ClientInterface $client): Client
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    public function getClient(): ClientInterface
+    {
+        return $this->client;
+    }
 }
